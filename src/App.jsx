@@ -48,10 +48,20 @@ function Logo({ compact = false }) {
 function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [appointmentOpen, setAppointmentOpen] = React.useState(false);
-  const [openFaq, setOpenFaq] = React.useState(0);\n  const [ebookOpen, setEbookOpen] = React.useState(false);\n  const [ebookSubmitted, setEbookSubmitted] = React.useState(false);\n  const [ebookForm, setEbookForm] = React.useState({ name: "", phone: "", email: "", concern: "", details: "" });
+  const [openFaq, setOpenFaq] = React.useState(0);
+  const [ebookOpen, setEbookOpen] = React.useState(false);\n  const [ebookAutoShown, setEbookAutoShown] = React.useState(false);
+  const [ebookSubmitted, setEbookSubmitted] = React.useState(false);
+  const [ebookForm, setEbookForm] = React.useState({ name: "", phone: "", email: "", concern: "", details: "" });
   const [form, setForm] = React.useState({ name: "", phone: "", email: "", service: "", comments: "" });
 
   const closeMenu = () => setMenuOpen(false);
+  React.useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setEbookOpen(true);
+      setEbookAutoShown(true);
+    }, 5000);
+    return () => window.clearTimeout(timer);
+  }, []);
   const openAppointment = (event) => {
     event?.preventDefault();
     closeMenu();
