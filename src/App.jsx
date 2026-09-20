@@ -3,6 +3,13 @@ import { ArrowRight, Check, Instagram, Menu, Sparkles, Star, X } from "lucide-re
 
 const instagramUrl = "https://www.instagram.com/drnadahassan/?hl=en";
 
+const processSteps = [
+  ["01", "Tell us your goals", "Share what you'd like to improve and the treatment you're interested in."],
+  ["02", "Personalised consultation", "Discuss your skin, hair, aesthetic goals, and the right treatment approach."],
+  ["03", "Treatment plan", "Receive a thoughtful plan built around your needs, comfort, and desired outcome."],
+  ["04", "Begin your journey", "Move forward with your chosen treatment and ongoing personalised care."]
+];
+
 const services = [
   {
     number: "01",
@@ -119,13 +126,14 @@ function App() {
 
       <main>
         <section className="hero">
+
           <div className="hero-orb hero-orb--one"></div>
           <div className="hero-orb hero-orb--two"></div>
           <div className="container hero-grid">
             <div className="hero-copy">
               <div className="eyebrow"><Sparkles size={15}/> Aesthetic medicine with a natural touch</div>
-              <h1>Confidence, <em>refined.</em><br/>Skin care, thoughtfully personalised.</h1>
-              <p>Advanced aesthetic and skin treatments focused on healthy-looking skin, subtle enhancement, and results that feel like you.</p>
+              <h1>Feel confident in the skin <em>you're in.</em></h1>
+              <p>Personalised aesthetic, skin, and hair treatments designed to address your concerns while keeping your results natural, balanced, and authentically you.</p>
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#contact" onClick={openAppointment}>Book a consultation <ArrowRight size={17}/></a>
                 <a className="btn btn-ghost" href="#treatments">Explore treatments</a>
@@ -168,6 +176,20 @@ function App() {
           </div>
         </section>
 
+        <section className="section value-section">
+          <div className="container">
+            <div className="section-head">
+              <div><p className="section-kicker">Our approach</p><h2>Modern care with a <em>personal touch.</em></h2></div>
+              <p className="section-intro">Thoughtful treatment choices, clear guidance, and a focus on natural-looking results.</p>
+            </div>
+            <div className="value-grid">
+              {["Personalised treatment plans", "Natural-looking aesthetic focus", "Modern skin & hair treatments", "A calm, premium experience"].map((item, i) => (
+                <div className="value-card" key={item}><span>0{i + 1}</span><h3>{item}</h3><p>Care shaped around your individual goals, features, needs, and comfort.</p></div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="section treatments" id="treatments">
           <div className="container">
             <div className="section-head">
@@ -194,6 +216,20 @@ function App() {
           </div>
         </section>
 
+        <section className="section process-section">
+          <div className="container">
+            <div className="section-head">
+              <div><p className="section-kicker">How it works</p><h2>A simple path to <em>personalised care.</em></h2></div>
+              <p className="section-intro">From your first message to your treatment plan, we'll keep the experience clear and comfortable.</p>
+            </div>
+            <div className="process-grid">
+              {processSteps.map(([number, title, text]) => (
+                <div className="process-card" key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="section why" id="why-us">
           <div className="container why-grid">
             <div className="why-panel">
@@ -210,6 +246,21 @@ function App() {
           </div>
         </section>
 
+        <section className="section trust-section">
+          <div className="container trust-content">
+            <div>
+              <p className="section-kicker">Trust & confidence</p>
+              <h2>Care that starts with <em>listening.</em></h2>
+              <p>Every consultation is an opportunity to understand your goals, answer your questions, and create a treatment approach that feels right for you.</p>
+            </div>
+            <div className="trust-points">
+              <div><Check size={16}/><span>Personalised consultations</span></div>
+              <div><Check size={16}/><span>Clear treatment guidance</span></div>
+              <div><Check size={16}/><span>Focus on natural-looking outcomes</span></div>
+            </div>
+          </div>
+        </section>
+
         <section className="instagram">
           <div className="container instagram-box">
             <div><Instagram size={21}/><p className="section-kicker">Follow the clinic</p><h2>See more of <em>Dr. Nada's</em> work.</h2></div>
@@ -221,8 +272,8 @@ function App() {
           <div className="container contact-box">
             <div>
               <p className="section-kicker">Ready when you are</p>
-              <h2>Let's create a plan<br/><em>made for you.</em></h2>
-              <p>Book a consultation to discuss your goals and find the right treatment approach for you.</p>
+              <h2>Ready to feel more <em>confident?</em></h2>
+              <p>Take the first step. Tell us what you'd like to achieve and we'll continue the conversation on WhatsApp.</p>
             </div>
             <div className="contact-actions">
               <a className="btn btn-primary" href="#contact" onClick={openAppointment}>Request a consultation <ArrowRight size={17}/></a>
