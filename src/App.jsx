@@ -182,7 +182,7 @@ function App() {
               <p>Book a consultation to discuss your goals and find the right treatment approach for you.</p>
             </div>
             <div className="contact-actions">
-              <a className="btn btn-primary" href="mailto:hello@drnadasclinic.com">Request a consultation <ArrowRight size={17}/></a>
+              <a className="btn btn-primary" href={instagramUrl} target="_blank" rel="noreferrer">Request a consultation <ArrowRight size={17}/></a>
               <a className="contact-instagram" href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={18}/> @drnadahassan</a>
             </div>
           </div>
