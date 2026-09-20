@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.css";
 import { ArrowRight, Check, ChevronDown, Instagram, Menu, Sparkles, Star, X } from "lucide-react";
 
 const instagramUrl = "https://www.instagram.com/drnadahassan/?hl=en";
