@@ -1,0 +1,89 @@
+/* Clinic visual layer */
+.about{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+.about::after{
+  content:"";
+  position:absolute;
+  right:5%;
+  top:50%;
+  width:250px;
+  height:180px;
+  transform:translateY(-50%);
+  background:url("./assets/problem-skin.webp") center/cover no-repeat;
+  border-radius:24px;
+  box-shadow:0 20px 55px rgba(64,42,78,.14);
+  opacity:.95;
+  z-index:-1;
+}
+.about-copy{position:relative;z-index:1;padding-right:285px}
+.treatments{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+.treatments::after{
+  content:"";
+  position:absolute;
+  right:-80px;
+  top:170px;
+  width:360px;
+  height:540px;
+  background:url("./assets/treatment-gallery.webp") center/cover no-repeat;
+  border-radius:34px;
+  opacity:.11;
+  z-index:-1;
+}
+.value-card,
+.process-card{
+  position:relative;
+}
+.value-card::before{
+  content:"✦";
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:var(--lav);
+  color:var(--purple);
+  font-size:15px;
+}
+.value-card:nth-child(2)::before{content:"♡"}
+.value-card:nth-child(3)::before{content:"✧"}
+.value-card:nth-child(4)::before{content:"◆";font-size:11px}
+.value-card>span{display:block;margin-top:14px}
+.process-grid{position:relative}
+.process-card::after{
+  content:"→";
+  position:absolute;
+  right:-15px;
+  top:35px;
+  color:#b8a9c0;
+  font-size:18px;
+}
+.process-card:last-child::after{display:none}
+.trust-section{
+  position:relative;
+  overflow:hidden;
+}
+.trust-section::after{
+  content:"";
+  position:absolute;
+  right:4%;
+  top:50%;
+  width:260px;
+  height:105px;
+  transform:translateY(-50%);
+  background:url("./assets/review-uraiza.webp") center/contain no-repeat;
+  opacity:.12;
+  pointer-events:none;
+}
+@media(max-width:900px){
+  .about-copy{padding-right:0}
+  .about::after{position:relative;right:auto;top:auto;transform:none;display:block;width:100%;height:220px;margin-top:28px;z-index:0}
+  .treatments::after{display:none}
+  .process-card::after{display:none}
+}
