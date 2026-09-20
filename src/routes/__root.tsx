@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import "../index.css";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -77,11 +78,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Dr. Nada's Clinic | Aesthetic & Skin Care" },
+      { name: "description", content: "Dr. Nada's Clinic — advanced facial aesthetics, injectables, hair restoration and specialised skin treatments." },
+      { name: "author", content: "Dr. Nada's Clinic" },
+      { property: "og:title", content: "Dr. Nada's Clinic | Aesthetic & Skin Care" },
+      { property: "og:description", content: "Advanced facial aesthetics, injectables, hair restoration and specialised skin treatments." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
