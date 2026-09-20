@@ -3,8 +3,12 @@ import { ArrowRight, Check, ChevronDown, Clock3, Instagram, Menu, MessageCircle,
 import portraitAsset from "./assets/dr-nada-portrait.png.asset.json";
 import specialistAsset from "./assets/dr-nada-specialist.jpg.asset.json";
 import clinicLogo from "./assets/dr-nada-logo.png";
-import problemSkin from "./assets/problem-skin.webp";
-import treatmentGallery from "./assets/treatment-gallery.webp";
+import facialAsset from "./assets/facial-treatment.jpg.asset.json";
+import hairAsset from "./assets/hair-consultation.jpg.asset.json";
+import hydrafacialAsset from "./assets/hydrafacial.jpg.asset.json";
+import skinConsultAsset from "./assets/skin-consultation.jpg.asset.json";
+import laserAsset from "./assets/laser-treatment.jpg.asset.json";
+import clinicInteriorAsset from "./assets/clinic-interior.jpg.asset.json";
 import reviewUraiza from "./assets/review-uraiza.webp";
 
 const instagramUrl = "https://www.instagram.com/drnadahassan/?hl=en";
