@@ -53,8 +53,51 @@ function Logo({ compact=false }) {
 
 function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [appointmentOpen, setAppointmentOpen] = React.useState(false);
+  const [form, setForm] = React.useState({
+    name: "",
+    phone: "",
+    email: "",
+    service: "",
+    comments: "",
+  });
+  const [submitted, setSubmitted] = React.useState(false);
 
   const closeMenu = () => setMenuOpen(false);
+
+  const openAppointment = (event) => {
+    event?.preventDefault();
+    closeMenu();
+    setSubmitted(false);
+    setAppointmentOpen(true);
+  };
+
+  const closeAppointment = () => setAppointmentOpen(false);
+
+  const updateField = (field, value) => {
+    setForm((current) => ({ ...current, [field]: value }));
+  };
+
+  const submitAppointment = (event) => {
+    event.preventDefault();
+
+    const message = [
+      "Hello Dr. Nada's Clinic,",
+      "",
+      "I would like to book an appointment.",
+      "",
+      `Name: ${form.name}`,
+      `Phone: ${form.phone}`,
+      `Email: ${form.email}`,
+      `Service: ${form.service}`,
+      `Comments: ${form.comments || "None"}`,
+      "",
+      "Thank you.",
+    ].join("\n");
+
+    setSubmitted(true);
+    window.location.href = `https://wa.me/923341111028?text=${encodeURIComponent(message)}`;
+  };
 
   return (
     <div className="site" id="top">
@@ -66,7 +109,7 @@ function App() {
             <a href="#treatments" onClick={closeMenu}>Treatments</a>
             <a href="#why-us" onClick={closeMenu}>Why us</a>
             <a href="#contact" onClick={closeMenu}>Contact</a>
-            <a className="nav-book" href="#contact" onClick={closeMenu}>Book a consultation <ArrowRight size={16}/></a>
+            <a className="nav-book" href="#contact" onClick={openAppointment}>Book a consultation <ArrowRight size={16}/></a>
           </nav>
           <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
             {menuOpen ? <X/> : <Menu/>}
@@ -84,7 +127,7 @@ function App() {
               <h1>Confidence, <em>refined.</em><br/>Skin care, thoughtfully personalised.</h1>
               <p>Advanced aesthetic and skin treatments focused on healthy-looking skin, subtle enhancement, and results that feel like you.</p>
               <div className="hero-actions">
-                <a className="btn btn-primary" href="#contact">Book a consultation <ArrowRight size={17}/></a>
+                <a className="btn btn-primary" href="#contact" onClick={openAppointment}>Book a consultation <ArrowRight size={17}/></a>
                 <a className="btn btn-ghost" href="#treatments">Explore treatments</a>
               </div>
               <div className="hero-note"><span className="dot"></span> Personalised care • Modern treatments • Natural-looking results</div>
@@ -157,7 +200,7 @@ function App() {
               <p className="section-kicker">The Dr. Nada's difference</p>
               <h2>Subtle. Modern. <em>Personal.</em></h2>
               <p>Every face, skin type, and goal is different. We believe the best aesthetic journey starts by listening, understanding, and creating a plan around you.</p>
-              <a className="text-link" href="#contact">Start your consultation <ArrowRight size={17}/></a>
+              <a className="text-link" href="#contact" onClick={openAppointment}>Start your consultation <ArrowRight size={17}/></a>
             </div>
             <div className="why-list">
               {["Personalised treatment planning", "Natural-looking aesthetic focus", "Modern skin, hair & aesthetic treatments", "A calm, premium clinic experience"].map((item, i) => (
@@ -182,12 +225,107 @@ function App() {
               <p>Book a consultation to discuss your goals and find the right treatment approach for you.</p>
             </div>
             <div className="contact-actions">
-              <a className="btn btn-primary" href={instagramUrl} target="_blank" rel="noreferrer">Request a consultation <ArrowRight size={17}/></a>
+              <a className="btn btn-primary" href="#contact" onClick={openAppointment}>Request a consultation <ArrowRight size={17}/></a>
               <a className="contact-instagram" href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={18}/> @drnadahassan</a>
             </div>
           </div>
         </section>
       </main>
+
+      {appointmentOpen && (
+        <div className="appointment-overlay" role="presentation" onMouseDown={closeAppointment}>
+          <div
+            className="appointment-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="appointment-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <button className="appointment-close" type="button" onClick={closeAppointment} aria-label="Close appointment form">
+              <X size={20} />
+            </button>
+            <div className="appointment-heading">
+              <p className="section-kicker">Book an appointment</p>
+              <h2 id="appointment-title">Let's make a plan <em>for you.</em></h2>
+              <p>Share your details and we'll continue with you on WhatsApp.</p>
+            </div>
+
+            <form className="appointment-form" onSubmit={submitAppointment}>
+              <label>
+                <span>Full Name <b>*</b></span>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(event) => updateField("name", event.target.value)}
+                  placeholder="Your full name"
+                  required
+                  autoComplete="name"
+                />
+              </label>
+
+              <label>
+                <span>Phone Number <b>*</b></span>
+                <input
+                  type="tel"
+                  value={form.phone}
+                  onChange={(event) => updateField("phone", event.target.value)}
+                  placeholder="Your phone number"
+                  required
+                  autoComplete="tel"
+                />
+              </label>
+
+              <label>
+                <span>Email Address <b>*</b></span>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(event) => updateField("email", event.target.value)}
+                  placeholder="you@example.com"
+                  required
+                  autoComplete="email"
+                />
+              </label>
+
+              <label>
+                <span>Service <b>*</b></span>
+                <select
+                  value={form.service}
+                  onChange={(event) => updateField("service", event.target.value)}
+                  required
+                >
+                  <option value="" disabled>Select a service</option>
+                  <option>PRP Therapy (Face)</option>
+                  <option>Exosome Therapy</option>
+                  <option>HydraFacial</option>
+                  <option>Lip Fillers</option>
+                  <option>Dermal Fillers</option>
+                  <option>Anti-Wrinkle Treatments</option>
+                  <option>Hair PRP</option>
+                  <option>Acne &amp; Breakout Care</option>
+                  <option>Laser Treatments</option>
+                  <option>Other</option>
+                </select>
+              </label>
+
+              <label className="appointment-full">
+                <span>Comments <small>(optional)</small></span>
+                <textarea
+                  value={form.comments}
+                  onChange={(event) => updateField("comments", event.target.value)}
+                  placeholder="Tell us anything you'd like us to know..."
+                  rows="4"
+                />
+              </label>
+
+              <button className="btn btn-primary appointment-submit" type="submit">
+                {submitted ? "Opening WhatsApp..." : "Submit & Continue to WhatsApp"}
+                <ArrowRight size={17} />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       <footer className="footer">
         <div className="container footer-inner">
