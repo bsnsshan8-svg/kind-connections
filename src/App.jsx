@@ -281,7 +281,7 @@ function App({ page = null }) {
               <div className="hero-photo"><img src={portraitAsset.url} alt="Dr. Nada Hassan" /></div>
               <div className="hero-caption">
                 <span className="caption-line" />
-                <div><strong>Dr. Nada's Clinic</strong><small>Skin • Hair • Aesthetics</small></div>
+                <div><strong>Dr. Nada's Clinic</strong><small>Skin • Hair • Aesthetics • 10 Years Experience</small></div>
               </div>
             </div>
           </div>
