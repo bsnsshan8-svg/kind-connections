@@ -39,17 +39,20 @@ const testimonials = [
 
 function Logo({ compact = false }) {
   return (
-    <a className={compact ? "brand brand--compact" : "brand"} href="#top" aria-label="Dr. Nada's Clinic home">
+    <a className={compact ? "brand brand--compact" : "brand"} href="/" aria-label="Dr. Nada's Clinic home">
       <img className="brand-logo" src={clinicLogo} alt="Dr. Nada's Clinic" />
     </a>
   );
 }
 
 function App() {
+  const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
+  const pageKey = currentPath === "/" ? "home" : currentPath.replace(/^\//, "").replace(/\/$/, "") || "home";
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [appointmentOpen, setAppointmentOpen] = React.useState(false);
   const [openFaq, setOpenFaq] = React.useState(0);
-  const [ebookOpen, setEbookOpen] = React.useState(false);\n  const [ebookAutoShown, setEbookAutoShown] = React.useState(false);
+  const [ebookOpen, setEbookOpen] = React.useState(false);
+  const [ebookAutoShown, setEbookAutoShown] = React.useState(false);
   const [ebookSubmitted, setEbookSubmitted] = React.useState(false);
   const [ebookForm, setEbookForm] = React.useState({ name: "", phone: "", email: "", concern: "", details: "" });
   const [form, setForm] = React.useState({ name: "", phone: "", email: "", service: "", comments: "" });
@@ -92,14 +95,14 @@ function App() {
   };
 
   return (
-    <div className="site" id="top">
+    <div className={`site page-${pageKey}`} id="top">
       <header className="header">
         <div className="container nav">
           <Logo />
           <nav className={menuOpen ? "nav-links is-open" : "nav-links"}>
             {[
-              ["About", "#about"], ["Treatments", "#treatments"], ["Specialists", "#specialists"],
-              ["Results", "#results"], ["The Clinic", "#clinic"], ["FAQs", "#faqs"]
+              ["About", "/about"], ["Treatments", "/treatments"], ["Specialists", "/specialists"],
+              ["Results", "/results"], ["The Clinic", "/clinic"], ["FAQs", "/faqs"]
             ].map(([label, href]) => <a key={href} href={href} onClick={closeMenu}>{label}</a>)}
             <a className="nav-book" href="#booking" onClick={openAppointment}>Book a consultation <ArrowRight size={15} /></a>
           </nav>
