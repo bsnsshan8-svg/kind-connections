@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight, Check, ChevronDown, Clock3, Instagram, Menu, MessageCircle, ShieldCheck, Sparkles, Star, X } from "lucide-react";
 import portraitAsset from "./assets/dr-nada-portrait.png.asset.json";
+import specialistAsset from "./assets/dr-nada-specialist.jpg.asset.json";
 import clinicLogo from "./assets/dr-nada-logo.png";
 import problemSkin from "./assets/problem-skin.webp";
 import treatmentGallery from "./assets/treatment-gallery.webp";
@@ -302,7 +303,7 @@ function App({ page = null }) {
               <div className="credentials-note"><ShieldCheck size={19} /><span>For qualifications, certifications, professional memberships, and clinical experience, please request the clinic's current credentials during your consultation.</span></div>
               <a className="text-link purple-link" href="#booking" onClick={openAppointment}>Meet the clinic team <ArrowRight size={17} /></a>
             </div>
-            <div className="specialist-photo"><img src={portraitAsset.url} alt="Dr. Nada Hassan" /></div>
+            <div className="specialist-photo"><img src={specialistAsset.url} alt="Dr. Nada Hassan" /></div>
           </div>
         </section>
 
