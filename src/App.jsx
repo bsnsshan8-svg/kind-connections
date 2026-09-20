@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowRight, Check, Instagram, Menu, Sparkles, Star, X } from "lucide-react";
+import portraitAsset from "./assets/dr-nada-portrait.png.asset.json";
 
 const instagramUrl = "https://www.instagram.com/drnadahassan/?hl=en";
 
@@ -142,11 +143,8 @@ function App() {
             </div>
             <div className="hero-card-wrap">
               <div className="hero-card">
-                <div className="portrait-placeholder">
-                  <div className="portrait-glow"></div>
-                  <div className="portrait-line portrait-line--1"></div>
-                  <div className="portrait-line portrait-line--2"></div>
-                  <span>DR. NADA'S<br/><b>CLINIC</b></span>
+                <div className="portrait-photo">
+                  <img src={portraitAsset.url} alt="Dr. Nada Hassan" />
                 </div>
                 <div className="floating-card">
                   <Star size={15} fill="currentColor"/>
