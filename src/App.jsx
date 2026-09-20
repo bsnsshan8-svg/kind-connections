@@ -169,6 +169,22 @@ function DedicatedPage({ type }) {
             </div>
           </section>
         )}
+        {type === "treatments" && (
+          <section className="section dedicated-proof">
+            <div className="container dedicated-proof-grid">
+              <div><img src={hydrafacialAsset.url} alt="HydraFacial treatment at Dr. Nada's Clinic" /></div>
+              <div><p className="section-kicker">Signature treatment</p><h2>HydraFacial — deep cleanse, instant glow.</h2><p>Deep cleansing, hydration, and radiance for dull, congested, or uneven skin. Suitability is confirmed during your consultation.</p></div>
+            </div>
+          </section>
+        )}
+        {type === "about" && (
+          <section className="section dedicated-proof">
+            <div className="container dedicated-proof-grid">
+              <div><img src={hairAsset.url} alt="Hair and scalp consultation at Dr. Nada's Clinic" /></div>
+              <div><p className="section-kicker">Skin, hair & aesthetics</p><h2>Care that starts with listening.</h2><p>From hair and scalp concerns to skin health and facial aesthetics, every plan begins with a conversation about your goals.</p></div>
+            </div>
+          </section>
+        )}
       </main>
       <footer className="footer"><div className="container footer-inner"><Logo compact /><div className="footer-links"><a href="/about">About</a><a href="/treatments">Treatments</a><a href="/faqs">FAQs</a><a href="/">Home</a></div><a className="footer-social" href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={18}/></a><p>© {new Date().getFullYear()} Dr. Nada's Clinic. All rights reserved.</p></div></footer>
     </div>
