@@ -1,57 +1,42 @@
 import React from "react";
-import { ArrowRight, Check, Instagram, Menu, Sparkles, Star, X } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, Clock3, Instagram, Menu, MessageCircle, ShieldCheck, Sparkles, Star, X } from "lucide-react";
 import portraitAsset from "./assets/dr-nada-portrait.png.asset.json";
 import clinicLogo from "./assets/dr-nada-logo.png";
+import problemSkin from "./assets/problem-skin.webp";
+import treatmentGallery from "./assets/treatment-gallery.webp";
+import reviewUraiza from "./assets/review-uraiza.webp";
 
 const instagramUrl = "https://www.instagram.com/drnadahassan/?hl=en";
+const whatsappNumber = "923341111028";
 
-const processSteps = [
-  ["01", "Tell us your goals", "Share what you'd like to improve and the treatment you're interested in."],
-  ["02", "Personalised consultation", "Discuss your skin, hair, aesthetic goals, and the right treatment approach."],
-  ["03", "Treatment plan", "Receive a thoughtful plan built around your needs, comfort, and desired outcome."],
-  ["04", "Begin your journey", "Move forward with your chosen treatment and ongoing personalised care."]
+const treatments = [
+  { title: "PRP Therapy", category: "Skin rejuvenation", text: "Face PRP focused on skin revitalisation, collagen support, and a healthy-looking glow." },
+  { title: "Exosome Therapy", category: "Skin regeneration", text: "An advanced regenerative approach designed to support skin repair, radiance, and the skin barrier." },
+  { title: "HydraFacial", category: "Deep cleanse & hydration", text: "Deep cleansing, exfoliation, and hydration for refreshed, smoother-looking skin." },
+  { title: "Lip Fillers", category: "Facial contouring", text: "Subtle volume, symmetry, shape refinement, and definition tailored to your features." },
+  { title: "Dermal Fillers", category: "Contour & balance", text: "Personalised facial contouring and fine-line care with a balanced aesthetic focus." },
+  { title: "Anti-Wrinkle Treatments", category: "Fine-line care", text: "Targeted treatment planning for the appearance of fine lines and facial expression areas." },
+  { title: "Hair PRP", category: "Hair & scalp", text: "A targeted treatment approach supporting hair restoration and scalp rejuvenation." },
+  { title: "Acne & Breakout Care", category: "Specialised skin", text: "Personalised treatment planning for clearer, smoother-looking skin." },
+  { title: "Laser Treatments", category: "Laser care", text: "Laser skin rejuvenation and hair-removal services selected around your needs." }
 ];
 
-const services = [
-  {
-    number: "01",
-    title: "Facial Aesthetics & Anti-Aging",
-    intro: "Refined treatments designed to revitalise the skin and support a naturally fresh, healthy appearance.",
-    items: [
-      ["PRP Therapy", "Face PRP for natural rejuvenation, skin revitalisation, collagen support, and a healthy glow."],
-      ["Exosome Therapy", "Advanced skin regeneration and repair to boost radiance and restore the skin barrier."],
-      ["HydraFacial", "Deep cleansing, exfoliation, and intensive skin hydration."]
-    ]
-  },
-  {
-    number: "02",
-    title: "Injectables & Contouring",
-    intro: "Subtle, personalised enhancements focused on balance, definition, and facial harmony.",
-    items: [
-      ["Lip Fillers", "Subtle volume enhancement, lip symmetry, shape refinement, and definition."],
-      ["Dermal Fillers & Anti-Wrinkle", "Fine-line reduction and facial contouring tailored to your features."]
-    ]
-  },
-  {
-    number: "03",
-    title: "Hair & Scalp Treatments",
-    intro: "Targeted care for healthier-looking hair and a refreshed scalp.",
-    items: [
-      ["Hair PRP", "A hair-loss treatment supporting hair restoration and scalp rejuvenation."]
-    ]
-  },
-  {
-    number: "04",
-    title: "Specialised Skin Treatments",
-    intro: "Personalised solutions for clearer, smoother, more confident skin.",
-    items: [
-      ["Acne & Breakout Care", "Targeted, personalised treatment plans for clear, smoother skin."],
-      ["Laser Treatments", "Laser skin rejuvenation and hair removal services."]
-    ]
-  }
+const faqs = [
+  ["How do I know which treatment is right for me?", "The consultation is the starting point. We discuss your goals, concerns, skin or hair needs, and the appropriate treatment approach before you proceed."],
+  ["Can I book a consultation before choosing a treatment?", "Yes. You can request a consultation and share your main concern. The clinic can then guide you on the next step."],
+  ["Will my treatment plan be personalised?", "Treatment planning is centred around your individual goals, features, needs, comfort, and the treatment being considered."],
+  ["How do I prepare for my appointment?", "Preparation can vary by treatment. When you request an appointment, mention the treatment you are considering so the clinic can provide relevant guidance."],
+  ["How can I ask about pricing?", "Pricing can vary by treatment and individual plan. Request a consultation to discuss the treatment and applicable fees."],
+  ["How do I book?", "Use the booking button to submit your details. Your request will continue through WhatsApp with Dr. Nada's Clinic."]
 ];
 
-function Logo({ compact=false }) {
+const testimonials = [
+  { name: "Uraiza Khan", treatment: "Under-eye care & PRP", text: "I got some of my sessions for my under eye and got prp done as well. Their services are incredible. And I genuinely got the results I wanted. Plus their hydra facial is the best in both twin cities. Highly recommended for anyone looking for a great dermatologist.", image: reviewUraiza },
+  { name: "Minahil Jamil", treatment: "Clinic experience", text: "I really liked the experience here. The doctor was very professional and nice and the staff was respectful and well trained. 10/10 recommendation." },
+  { name: "Haya Shoaib", treatment: "Clinic experience", text: "It was my first time at Dr. Nada’s clinic and it was a great experience. The environment is very nice and the staff is very cooperative." }
+];
+
+function Logo({ compact = false }) {
   return (
     <a className={compact ? "brand brand--compact" : "brand"} href="#top" aria-label="Dr. Nada's Clinic home">
       <img className="brand-logo" src={clinicLogo} alt="Dr. Nada's Clinic" />
@@ -62,49 +47,32 @@ function Logo({ compact=false }) {
 function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [appointmentOpen, setAppointmentOpen] = React.useState(false);
-  const [form, setForm] = React.useState({
-    name: "",
-    phone: "",
-    email: "",
-    service: "",
-    comments: "",
-  });
-  const [submitted, setSubmitted] = React.useState(false);
+  const [openFaq, setOpenFaq] = React.useState(0);
+  const [form, setForm] = React.useState({ name: "", phone: "", email: "", service: "", comments: "" });
 
   const closeMenu = () => setMenuOpen(false);
-
   const openAppointment = (event) => {
     event?.preventDefault();
     closeMenu();
-    setSubmitted(false);
     setAppointmentOpen(true);
   };
-
-  const closeAppointment = () => setAppointmentOpen(false);
-
-  const updateField = (field, value) => {
-    setForm((current) => ({ ...current, [field]: value }));
-  };
-
+  const updateField = (field, value) => setForm((current) => ({ ...current, [field]: value }));
   const submitAppointment = (event) => {
     event.preventDefault();
-
     const message = [
       "Hello Dr. Nada's Clinic,",
       "",
-      "I would like to book an appointment.",
+      "I would like to request a private consultation.",
       "",
       `Name: ${form.name}`,
       `Phone: ${form.phone}`,
       `Email: ${form.email}`,
-      `Service: ${form.service}`,
-      `Comments: ${form.comments || "None"}`,
+      `Treatment: ${form.service}`,
+      `Notes: ${form.comments || "None"}`,
       "",
-      "Thank you.",
+      "Thank you."
     ].join("\n");
-
-    setSubmitted(true);
-    window.location.href = `https://wa.me/923341111028?text=${encodeURIComponent(message)}`;
+    window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   };
 
   return (
@@ -113,276 +81,182 @@ function App() {
         <div className="container nav">
           <Logo />
           <nav className={menuOpen ? "nav-links is-open" : "nav-links"}>
-            <a href="#about" onClick={closeMenu}>About</a>
-            <a href="#treatments" onClick={closeMenu}>Treatments</a>
-            <a href="#why-us" onClick={closeMenu}>Why us</a>
-            <a href="#contact" onClick={closeMenu}>Contact</a>
-            <a className="nav-book" href="#contact" onClick={openAppointment}>Book a consultation <ArrowRight size={16}/></a>
+            {[
+              ["About", "#about"], ["Treatments", "#treatments"], ["Specialists", "#specialists"],
+              ["Results", "#results"], ["The Clinic", "#clinic"], ["FAQs", "#faqs"]
+            ].map(([label, href]) => <a key={href} href={href} onClick={closeMenu}>{label}</a>)}
+            <a className="nav-book" href="#booking" onClick={openAppointment}>Book a consultation <ArrowRight size={15} /></a>
           </nav>
-          <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
-            {menuOpen ? <X/> : <Menu/>}
-          </button>
+          <button className="menu-btn" onClick={() => setMenuOpen((v) => !v)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</button>
         </div>
       </header>
 
       <main>
         <section className="hero">
-
-          <div className="hero-orb hero-orb--one"></div>
-          <div className="hero-orb hero-orb--two"></div>
+          <div className="hero-glow hero-glow-one" />
+          <div className="hero-glow hero-glow-two" />
           <div className="container hero-grid">
             <div className="hero-copy">
-              <div className="eyebrow"><Sparkles size={15}/> Aesthetic medicine with a natural touch</div>
-              <h1>Feel confident in the skin <em>you're in.</em></h1>
-              <p>Personalised aesthetic, skin, and hair treatments designed to address your concerns while keeping your results natural, balanced, and authentically you.</p>
+              <div className="eyebrow"><Sparkles size={14} /> A considered approach to aesthetic care</div>
+              <h1>Exceptional care.<br /><em>Designed around you.</em></h1>
+              <p>Advanced skin, hair, and aesthetic treatments with thoughtful clinical care and a personalised experience designed around your goals.</p>
               <div className="hero-actions">
-                <a className="btn btn-primary" href="#contact" onClick={openAppointment}>Book a consultation <ArrowRight size={17}/></a>
+                <a className="btn btn-primary" href="#booking" onClick={openAppointment}>Book a private consultation <ArrowRight size={17} /></a>
                 <a className="btn btn-ghost" href="#treatments">Explore treatments</a>
               </div>
-              <div className="hero-note"><span className="dot"></span> Personalised care • Modern treatments • Natural-looking results</div>
+              <div className="hero-trust">
+                <span><ShieldCheck size={15} /> Personalised care</span>
+                <span><Sparkles size={15} /> Modern treatments</span>
+                <span><Check size={15} /> Natural-looking focus</span>
+              </div>
             </div>
-            <div className="hero-card-wrap">
-              <div className="hero-card">
-                <div className="portrait-photo">
-                  <img src={portraitAsset.url} alt="Dr. Nada Hassan" />
-                </div>
-                <div className="floating-card">
-                  <Star size={15} fill="currentColor"/>
-                  <div><strong>Personalised</strong><small>treatment plans</small></div>
-                </div>
+            <div className="hero-visual">
+              <div className="hero-photo"><img src={portraitAsset.url} alt="Dr. Nada Hassan" /></div>
+              <div className="hero-caption">
+                <span className="caption-line" />
+                <div><strong>Dr. Nada's Clinic</strong><small>Skin • Hair • Aesthetics</small></div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="trust-strip">
-          <div className="container trust-inner">
-            <span>FACE</span><i></i><span>SKIN</span><i></i><span>HAIR</span><i></i><span>CONFIDENCE</span>
+        <section className="credibility">
+          <div className="container credibility-grid">
+            {[
+              ["01", "Expertise", "Thoughtful treatment planning"],
+              ["02", "Advanced Technology", "Modern treatment options"],
+              ["03", "Personalised Care", "Plans built around you"],
+              ["04", "Exceptional Experience", "Calm, considered care"]
+            ].map(([n, title, text]) => (
+              <div className="credibility-item" key={title}><span>{n}</span><div><strong>{title}</strong><small>{text}</small></div></div>
+            ))}
           </div>
         </section>
 
-        <section className="section about" id="about">
-          <div className="container two-col">
-            <div>
-              <p className="section-kicker">A more considered approach</p>
-              <h2>Enhance what makes you <em>you.</em></h2>
-            </div>
-            <div className="about-copy">
-              <p>At Dr. Nada's Clinic, every treatment is selected around your individual goals, skin needs, and natural features. Our approach combines modern aesthetic treatments with a refined, personal experience.</p>
-              <p>From skin rejuvenation and injectables to hair and scalp care, the focus is on thoughtful treatment and a result that looks fresh, balanced, and authentically yours.</p>
+        <section className="section about-editorial" id="about">
+          <div className="container editorial-grid">
+            <div className="editorial-image"><img src={problemSkin} alt="Patient considering her skin in a mirror" /></div>
+            <div className="editorial-copy">
+              <p className="section-kicker">The clinic experience</p>
+              <h2>Care that feels <em>considered.</em></h2>
+              <p>At Dr. Nada's Clinic, every journey starts with listening. Your concerns, goals, features, and comfort help shape the treatment conversation.</p>
+              <p>Our focus spans facial aesthetics, skin health, hair and scalp treatments, and contouring — with an emphasis on thoughtful choices and a natural, balanced aesthetic.</p>
+              <div className="signature"><span>“</span><div><strong>Personalised care, from the first conversation.</strong><small>A calm approach to your individual treatment journey.</small></div></div>
             </div>
           </div>
         </section>
 
-        <section className="section value-section">
+        <section className="section specialist" id="specialists">
+          <div className="container specialist-grid">
+            <div className="specialist-copy">
+              <p className="section-kicker">Meet the doctor</p>
+              <h2>Dr. Nada Hassan</h2>
+              <p className="specialist-role">Aesthetic • Skin • Hair Care</p>
+              <p>Dr. Nada's Clinic brings together aesthetic treatments, skin care, and hair and scalp services in a setting centred around personalised patient care.</p>
+              <div className="credentials-note"><ShieldCheck size={19} /><span>For qualifications, certifications, professional memberships, and clinical experience, please request the clinic's current credentials during your consultation.</span></div>
+              <a className="text-link purple-link" href="#booking" onClick={openAppointment}>Meet the clinic team <ArrowRight size={17} /></a>
+            </div>
+            <div className="specialist-photo"><img src={portraitAsset.url} alt="Dr. Nada Hassan" /></div>
+          </div>
+        </section>
+
+        <section className="section treatments-section" id="treatments">
           <div className="container">
             <div className="section-head">
-              <div><p className="section-kicker">Our approach</p><h2>Modern care with a <em>personal touch.</em></h2></div>
-              <p className="section-intro">Thoughtful treatment choices, clear guidance, and a focus on natural-looking results.</p>
+              <div><p className="section-kicker">Treatments & services</p><h2>Thoughtful treatments.<br /><em>Individual plans.</em></h2></div>
+              <p className="section-intro">Explore the clinic's core services. Treatment suitability, duration, recovery, and aftercare can be discussed during your consultation.</p>
             </div>
-            <div className="value-grid">
-              {["Personalised treatment plans", "Natural-looking aesthetic focus", "Modern skin & hair treatments", "A calm, premium experience"].map((item, i) => (
-                <div className="value-card" key={item}><span>0{i + 1}</span><h3>{item}</h3><p>Care shaped around your individual goals, features, needs, and comfort.</p></div>
-              ))}
+            <div className="treatment-layout">
+              <div className="treatment-feature"><img src={treatmentGallery} alt="Dr. Nada's Clinic treatment gallery" /><div><span>Signature care</span><h3>Skin, hair & aesthetic treatments</h3><a href="#booking" onClick={openAppointment}>Discuss your goals <ArrowRight size={16} /></a></div></div>
+              <div className="treatment-list">
+                {treatments.map((t, i) => <a className="treatment-row" href="#booking" onClick={openAppointment} key={t.title}><span className="treatment-number">0{i + 1}</span><div><small>{t.category}</small><h3>{t.title}</h3><p>{t.text}</p></div><ArrowRight className="row-arrow" size={17} /></a>)}
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="section treatments" id="treatments">
+        <section className="section signature-section">
           <div className="container">
-            <div className="section-head">
-              <div><p className="section-kicker">Our treatments</p><h2>Care that starts with <em>you.</em></h2></div>
-              <p className="section-intro">Explore our core aesthetic, skin, hair, and contouring treatments.</p>
-            </div>
-            <div className="service-grid">
-              {services.map((service) => (
-                <article className="service-card" key={service.number}>
-                  <div className="service-top"><span>{service.number}</span><Sparkles size={18}/></div>
-                  <h3>{service.title}</h3>
-                  <p className="service-intro">{service.intro}</p>
-                  <div className="service-items">
-                    {service.items.map(([name, text]) => (
-                      <div className="service-item" key={name}>
-                        <div className="check"><Check size={13}/></div>
-                        <div><strong>{name}</strong><p>{text}</p></div>
-                      </div>
-                    ))}
-                  </div>
-                </article>
-              ))}
+            <div className="section-head"><div><p className="section-kicker">Our signature approach</p><h2>A premium experience,<br /><em>without the noise.</em></h2></div><p className="section-intro">Luxury is in the details: clear guidance, considered design, and care that gives you room to make informed decisions.</p></div>
+            <div className="signature-grid">
+              {[
+                ["01", "Consultation first", "Start with your goals and concerns before deciding on a treatment."],
+                ["02", "Natural-looking focus", "A balanced aesthetic approach that keeps your individual features at the centre."],
+                ["03", "Modern treatment options", "A focused menu spanning skin, hair, injectables, and laser services."],
+                ["04", "Ongoing care", "Keep communication clear through treatment and follow-up conversations."]
+              ].map(([n, title, text]) => <div className="signature-card" key={n}><span>{n}</span><h3>{title}</h3><p>{text}</p></div>)}
             </div>
           </div>
         </section>
 
-        <section className="section process-section">
+        <section className="results-band" id="results">
+          <div className="container results-grid">
+            <div><p className="section-kicker">Real results</p><h2>Results should be <em>personal.</em></h2><p>Before-and-after material can be added here when genuine patient consent and suitable clinical documentation are available. We do not use stock or invented results.</p><a className="btn btn-light" href="#booking" onClick={openAppointment}>Ask about results & treatment <ArrowRight size={17} /></a></div>
+            <div className="results-placeholder"><Sparkles size={26} /><strong>Patient results gallery</strong><span>Consent-led before & after presentation</span></div>
+          </div>
+        </section>
+
+        <section className="section technology">
+          <div className="container tech-grid">
+            <div className="tech-visual"><img src={treatmentGallery} alt="Treatment and skin-care services at the clinic" /></div>
+            <div className="tech-copy"><p className="section-kicker">Technology & innovation</p><h2>Advanced technology.<br /><em>Thoughtful care.</em></h2><p>The clinic offers modern treatment options across skin, hair, aesthetics, and laser care. The right approach depends on the individual and is discussed during consultation.</p><div className="tech-points"><div><Check size={15} /><span>Technology selected for the treatment goal</span></div><div><Check size={15} /><span>Clear explanation before treatment</span></div><div><Check size={15} /><span>Individual suitability and aftercare discussion</span></div></div></div>
+          </div>
+        </section>
+
+        <section className="section clinic-section" id="clinic">
+          <div className="container clinic-box">
+            <div><p className="section-kicker">The clinic environment</p><h2>Designed around your <em>comfort.</em></h2><p>A premium clinic experience should feel calm, private, and considered. This section is ready for your real reception, waiting-area, treatment-room, and interior photography.</p></div>
+            <div className="clinic-detail"><div><Sparkles size={20}/><strong>Calm & considered</strong><span>Replace with approved clinic photography</span></div><div><ShieldCheck size={20}/><strong>Private & professional</strong><span>Show the real patient environment</span></div></div>
+          </div>
+        </section>
+
+        <section className="section journey">
           <div className="container">
-            <div className="section-head">
-              <div><p className="section-kicker">How it works</p><h2>A simple path to <em>personalised care.</em></h2></div>
-              <p className="section-intro">From your first message to your treatment plan, we'll keep the experience clear and comfortable.</p>
-            </div>
-            <div className="process-grid">
-              {processSteps.map(([number, title, text]) => (
-                <div className="process-card" key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></div>
-              ))}
-            </div>
+            <div className="section-head"><div><p className="section-kicker">The patient journey</p><h2>A clear path from <em>consultation to care.</em></h2></div></div>
+            <div className="journey-grid">{[
+              ["01", "Consultation", "Understanding your needs."],
+              ["02", "Personalised Plan", "Creating an appropriate treatment approach."],
+              ["03", "Treatment", "Expert care in a comfortable environment."],
+              ["04", "Follow-Up", "Ongoing care and support."]
+            ].map(([n,t,d]) => <div className="journey-step" key={n}><span>{n}</span><div className="journey-line" /><h3>{t}</h3><p>{d}</p></div>)}</div>
           </div>
         </section>
 
-        <section className="section why" id="why-us">
-          <div className="container why-grid">
-            <div className="why-panel">
-              <p className="section-kicker">The Dr. Nada's difference</p>
-              <h2>Subtle. Modern. <em>Personal.</em></h2>
-              <p>Every face, skin type, and goal is different. We believe the best aesthetic journey starts by listening, understanding, and creating a plan around you.</p>
-              <a className="text-link" href="#contact" onClick={openAppointment}>Start your consultation <ArrowRight size={17}/></a>
-            </div>
-            <div className="why-list">
-              {["Personalised treatment planning", "Natural-looking aesthetic focus", "Modern skin, hair & aesthetic treatments", "A calm, premium clinic experience"].map((item, i) => (
-                <div className="why-item" key={item}><span>0{i+1}</span><div><strong>{item}</strong><p>Thoughtful care built around your individual goals and comfort.</p></div></div>
-              ))}
-            </div>
+        <section className="section stories" id="stories">
+          <div className="container">
+            <div className="section-head"><div><p className="section-kicker">Patient stories</p><h2>Real words from <em>real patients.</em></h2></div><p className="section-intro">Selected genuine feedback supplied for the clinic website.</p></div>
+            <div className="testimonial-grid">{testimonials.map((t) => <article className="testimonial" key={t.name}>{t.image ? <img src={t.image} alt={`Review from ${t.name}`} /> : <div className="quote-mark">“</div>}<div className="stars"><Star size={13} fill="currentColor" /><Star size={13} fill="currentColor" /><Star size={13} fill="currentColor" /><Star size={13} fill="currentColor" /><Star size={13} fill="currentColor" /></div><p>“{t.text}”</p><strong>{t.name}</strong><small>{t.treatment}</small></article>)}</div>
           </div>
         </section>
 
-        <section className="section trust-section">
-          <div className="container trust-content">
-            <div>
-              <p className="section-kicker">Trust & confidence</p>
-              <h2>Care that starts with <em>listening.</em></h2>
-              <p>Every consultation is an opportunity to understand your goals, answer your questions, and create a treatment approach that feels right for you.</p>
-            </div>
-            <div className="trust-points">
-              <div><Check size={16}/><span>Personalised consultations</span></div>
-              <div><Check size={16}/><span>Clear treatment guidance</span></div>
-              <div><Check size={16}/><span>Focus on natural-looking outcomes</span></div>
-            </div>
+        <section className="section difference">
+          <div className="container difference-grid">
+            <div><p className="section-kicker">Why choose the clinic</p><h2>The difference is in the <em>details.</em></h2><p>Use this space for substantiated clinic-specific credentials and differentiators — never generic claims that cannot be supported.</p></div>
+            <div className="difference-list">{["Experienced specialists", "Personalised treatment plans", "Modern treatment options", "Private, considered environment", "Clear follow-up guidance", "Patient-centred care"].map((x, i) => <div key={x}><span>0{i+1}</span><strong>{x}</strong><Check size={16} /></div>)}</div>
+          </div>
+        </section>
+
+        <section className="section faq" id="faqs">
+          <div className="container faq-grid">
+            <div><p className="section-kicker">Frequently asked questions</p><h2>Good care starts with <em>clear answers.</em></h2><p>Have another question? Send it with your consultation request and the clinic can guide you.</p><a className="text-link purple-link" href="#booking" onClick={openAppointment}>Ask a question <ArrowRight size={17} /></a></div>
+            <div className="faq-list">{faqs.map(([q,a], i) => <div className={openFaq === i ? "faq-item is-open" : "faq-item"} key={q}><button onClick={() => setOpenFaq(openFaq === i ? -1 : i)}><span>{q}</span><ChevronDown size={18} /></button>{openFaq === i && <p>{a}</p>}</div>)}</div>
           </div>
         </section>
 
         <section className="instagram">
-          <div className="container instagram-box">
-            <div><Instagram size={21}/><p className="section-kicker">Follow the clinic</p><h2>See more of <em>Dr. Nada's</em> work.</h2></div>
-            <a className="btn btn-light" href={instagramUrl} target="_blank" rel="noreferrer">Visit Instagram <ArrowRight size={17}/></a>
-          </div>
+          <div className="container instagram-box"><div><Instagram size={21} /><p className="section-kicker">Follow the clinic</p><h2>More from <em>Dr. Nada's.</em></h2></div><a className="btn btn-light" href={instagramUrl} target="_blank" rel="noreferrer">Visit Instagram <ArrowRight size={17} /></a></div>
         </section>
 
-        <section className="section contact" id="contact">
-          <div className="container contact-box">
-            <div>
-              <p className="section-kicker">Ready when you are</p>
-              <h2>Ready to feel more <em>confident?</em></h2>
-              <p>Take the first step. Tell us what you'd like to achieve and we'll continue the conversation on WhatsApp.</p>
-            </div>
-            <div className="contact-actions">
-              <a className="btn btn-primary" href="#contact" onClick={openAppointment}>Request a consultation <ArrowRight size={17}/></a>
-              <a className="contact-instagram" href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={18}/> @drnadahassan</a>
-            </div>
-          </div>
+        <section className="section booking" id="booking">
+          <div className="container booking-box"><div><p className="section-kicker">Private consultation</p><h2>Ready to begin your <em>journey?</em></h2><p>Share what you'd like to improve. We'll continue the conversation on WhatsApp and help you take the next step.</p></div><div className="booking-actions"><a className="btn btn-primary" href="#booking" onClick={openAppointment}>Request a consultation <ArrowRight size={17} /></a><a className="whatsapp-link" href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noreferrer"><MessageCircle size={17} /> WhatsApp the clinic</a></div></div>
         </section>
+
+        <section className="location" id="contact"><div className="container location-grid"><div><p className="section-kicker">Contact & location</p><h2>Let's make your visit <em>simple.</em></h2><div className="contact-lines"><div><strong>WhatsApp</strong><span>+92 334 1111028</span></div><div><strong>Instagram</strong><span>@drnadahassan</span></div><div><strong>Appointments</strong><span>By consultation request</span></div></div></div><div className="map-card"><Clock3 size={19} /><strong>Clinic details</strong><p>Add the verified clinic address, opening hours, parking information, and Google Maps link here.</p><a href="#booking" onClick={openAppointment}>Request directions <ArrowRight size={15} /></a></div></div></section>
       </main>
 
-      {appointmentOpen && (
-        <div className="appointment-overlay" role="presentation" onMouseDown={closeAppointment}>
-          <div
-            className="appointment-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="appointment-title"
-            onMouseDown={(event) => event.stopPropagation()}
-          >
-            <button className="appointment-close" type="button" onClick={closeAppointment} aria-label="Close appointment form">
-              <X size={20} />
-            </button>
-            <div className="appointment-heading">
-              <p className="section-kicker">Book an appointment</p>
-              <h2 id="appointment-title">Let's make a plan <em>for you.</em></h2>
-              <p>Share your details and we'll continue with you on WhatsApp.</p>
-            </div>
+      {appointmentOpen && <div className="appointment-overlay" role="presentation" onMouseDown={() => setAppointmentOpen(false)}><div className="appointment-modal" role="dialog" aria-modal="true" aria-labelledby="appointment-title" onMouseDown={(e) => e.stopPropagation()}><button className="appointment-close" onClick={() => setAppointmentOpen(false)} aria-label="Close"><X size={20} /></button><div className="appointment-heading"><p className="section-kicker">Book a private consultation</p><h2 id="appointment-title">Let's make a plan <em>for you.</em></h2><p>Share your details and continue with the clinic on WhatsApp.</p></div><form className="appointment-form" onSubmit={submitAppointment}><label><span>Full Name <b>*</b></span><input required value={form.name} onChange={(e) => updateField("name", e.target.value)} placeholder="Your full name" /></label><label><span>Phone Number <b>*</b></span><input required type="tel" value={form.phone} onChange={(e) => updateField("phone", e.target.value)} placeholder="Your phone number" /></label><label><span>Email Address <b>*</b></span><input required type="email" value={form.email} onChange={(e) => updateField("email", e.target.value)} placeholder="you@example.com" /></label><label><span>Treatment <b>*</b></span><select required value={form.service} onChange={(e) => updateField("service", e.target.value)}><option value="" disabled>Select a treatment</option>{treatments.map((t) => <option key={t.title}>{t.title}</option>)}<option>General consultation</option></select></label><label className="appointment-full"><span>Notes <small>(optional)</small></span><textarea rows="4" value={form.comments} onChange={(e) => updateField("comments", e.target.value)} placeholder="Tell us about your main concern or goal..." /></label><button className="btn btn-primary appointment-submit" type="submit">Submit & continue to WhatsApp <ArrowRight size={17} /></button></form></div></div>}
 
-            <form className="appointment-form" onSubmit={submitAppointment}>
-              <label>
-                <span>Full Name <b>*</b></span>
-                <input
-                  type="text"
-                  value={form.name}
-                  onChange={(event) => updateField("name", event.target.value)}
-                  placeholder="Your full name"
-                  required
-                  autoComplete="name"
-                />
-              </label>
-
-              <label>
-                <span>Phone Number <b>*</b></span>
-                <input
-                  type="tel"
-                  value={form.phone}
-                  onChange={(event) => updateField("phone", event.target.value)}
-                  placeholder="Your phone number"
-                  required
-                  autoComplete="tel"
-                />
-              </label>
-
-              <label>
-                <span>Email Address <b>*</b></span>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={(event) => updateField("email", event.target.value)}
-                  placeholder="you@example.com"
-                  required
-                  autoComplete="email"
-                />
-              </label>
-
-              <label>
-                <span>Service <b>*</b></span>
-                <select
-                  value={form.service}
-                  onChange={(event) => updateField("service", event.target.value)}
-                  required
-                >
-                  <option value="" disabled>Select a service</option>
-                  <option>PRP Therapy (Face)</option>
-                  <option>Exosome Therapy</option>
-                  <option>HydraFacial</option>
-                  <option>Lip Fillers</option>
-                  <option>Dermal Fillers</option>
-                  <option>Anti-Wrinkle Treatments</option>
-                  <option>Hair PRP</option>
-                  <option>Acne &amp; Breakout Care</option>
-                  <option>Laser Treatments</option>
-                  <option>Other</option>
-                </select>
-              </label>
-
-              <label className="appointment-full">
-                <span>Comments <small>(optional)</small></span>
-                <textarea
-                  value={form.comments}
-                  onChange={(event) => updateField("comments", event.target.value)}
-                  placeholder="Tell us anything you'd like us to know..."
-                  rows="4"
-                />
-              </label>
-
-              <button className="btn btn-primary appointment-submit" type="submit">
-                {submitted ? "Opening WhatsApp..." : "Submit & Continue to WhatsApp"}
-                <ArrowRight size={17} />
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      <footer className="footer">
-        <div className="container footer-inner">
-          <Logo compact />
-          <p>© {new Date().getFullYear()} Dr. Nada's Clinic. All rights reserved.</p>
-          <a href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={18}/></a>
-        </div>
-      </footer>
+      <footer className="footer"><div className="container footer-inner"><Logo compact /><div className="footer-links"><a href="#about">About</a><a href="#treatments">Treatments</a><a href="#faqs">FAQs</a><a href="#contact">Contact</a></div><a className="footer-social" href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={18} /></a><p>© {new Date().getFullYear()} Dr. Nada's Clinic. All rights reserved.</p></div></footer>
     </div>
   );
 }
