@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import App from "../App";
+// @ts-ignore -- App is an untyped JSX file
+import App from "../App.jsx";
 
 export const Route = createFileRoute("/")({
   component: App,
