@@ -45,9 +45,135 @@ function Logo({ compact = false }) {
   );
 }
 
-function App() {
+
+const dedicatedContent = {
+  about: {
+    eyebrow: "THE CLINIC EXPERIENCE",
+    title: "Personalised care, thoughtfully delivered.",
+    intro: "A premium clinic experience built around listening, thoughtful treatment planning, and comfortable care.",
+    items: [
+      ["Personalised consultations", "Your concerns, goals, features, and comfort guide the treatment conversation."],
+      ["Skin, hair & aesthetics", "A focused range of services covering facial aesthetics, skin health, hair and scalp care, and laser treatments."],
+      ["Calm, considered care", "A premium environment designed to make every stage of your visit feel clear and comfortable."]
+    ]
+  },
+  treatments: {
+    eyebrow: "TREATMENTS & SERVICES",
+    title: "Advanced treatments, tailored to you.",
+    intro: "Explore the clinic's skin, hair, aesthetic, injectable, and laser services. Suitability and treatment planning are discussed during consultation.",
+    items: treatments.map((t) => [t.title, t.text])
+  },
+  specialists: {
+    eyebrow: "MEET THE SPECIALIST",
+    title: "Expert care with a personal approach.",
+    intro: "Dr. Nada's Clinic brings together aesthetic, skin, hair, and scalp services around a consultation-led approach.",
+    items: [
+      ["Dr. Nada Hassan", "Aesthetic, skin, and hair care services delivered through a personalised patient journey."],
+      ["Consultation first", "Your goals and concerns are discussed before deciding on an appropriate treatment approach."],
+      ["Individual treatment planning", "Treatment choices are considered around your needs, comfort, and desired outcome."]
+    ]
+  },
+  results: {
+    eyebrow: "PATIENT RESULTS & STORIES",
+    title: "Real experiences. Individual outcomes.",
+    intro: "Selected genuine patient feedback is presented below. Individual treatment outcomes vary and results should always be discussed with a qualified clinician.",
+    items: testimonials.map((t) => [t.name, t.text])
+  },
+  clinic: {
+    eyebrow: "THE CLINIC",
+    title: "Designed around your comfort.",
+    intro: "A calm, considered environment where the clinical experience feels personal, private, and welcoming.",
+    items: [
+      ["A calm experience", "From consultation to treatment, the experience is designed to feel clear and unhurried."],
+      ["Private & professional", "A considered setting for personal conversations, treatment planning, and care."],
+      ["Modern treatment options", "Explore a focused menu of skin, hair, aesthetic, and laser services."]
+    ]
+  },
+  faqs: {
+    eyebrow: "FREQUENTLY ASKED QUESTIONS",
+    title: "Answers before you book.",
+    intro: "Find quick answers about consultations, treatment planning, preparation, pricing, and appointments.",
+    items: faqs
+  }
+};
+
+function DedicatedPage({ type }) {
+  const data = dedicatedContent[type];
+  const [openFaq, setOpenFaq] = React.useState(0);
+  if (!data) return null;
+  const isFaq = type === "faqs";
+  return (
+    <div className="dedicated-page">
+      <header className="dedicated-header">
+        <div className="container dedicated-nav">
+          <Logo />
+          <nav>
+            <a href="/about">About</a><a href="/treatments">Treatments</a><a href="/specialists">Specialists</a>
+            <a href="/results">Results</a><a href="/clinic">The Clinic</a><a href="/faqs">FAQs</a>
+          </nav>
+          <a className="btn btn-primary dedicated-book" href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hello Dr. Nada's Clinic, I would like to request a consultation.")}`} target="_blank" rel="noreferrer">Book a consultation <ArrowRight size={16}/></a>
+        </div>
+      </header>
+      <main>
+        <section className="dedicated-hero">
+          <div className="container">
+            <p className="section-kicker">{data.eyebrow}</p>
+            <h1>{data.title}</h1>
+            <p>{data.intro}</p>
+          </div>
+        </section>
+        <section className="section dedicated-content">
+          <div className={isFaq ? "container dedicated-faq-list" : "container dedicated-cards"}>
+            {data.items.map(([title, text], i) =>
+              isFaq ? (
+                <article className="dedicated-faq" key={title}>
+                  <button onClick={() => setOpenFaq(openFaq === i ? -1 : i)}><span>{title}</span><ChevronDown size={18}/></button>
+                  {openFaq === i && <p>{text}</p>}
+                </article>
+              ) : (
+                <article className="dedicated-card" key={title}>
+                  <span>{String(i + 1).padStart(2, "0")}</span>
+                  <h2>{title}</h2>
+                  <p>{text}</p>
+                </article>
+              )
+            )}
+          </div>
+        </section>
+        {type === "results" && (
+          <section className="section dedicated-proof">
+            <div className="container dedicated-proof-grid">
+              <div><img src={reviewUraiza} alt="Patient review supplied for Dr. Nada's Clinic" /></div>
+              <div><p className="section-kicker">Genuine patient feedback</p><h2>Real words from a patient.</h2><p>More consented before-and-after material can be added here when genuine clinical documentation and patient permission are available.</p></div>
+            </div>
+          </section>
+        )}
+        {type === "clinic" && (
+          <section className="section dedicated-proof">
+            <div className="container dedicated-proof-grid">
+              <div><img src={treatmentGallery} alt="Treatment services at Dr. Nada's Clinic" /></div>
+              <div><p className="section-kicker">Treatment environment</p><h2>A considered clinical experience.</h2><p>This gallery uses the approved treatment visuals supplied for the clinic website. Real clinic interior photography can be added when available.</p></div>
+            </div>
+          </section>
+        )}
+        {type === "specialists" && (
+          <section className="section dedicated-proof">
+            <div className="container dedicated-proof-grid">
+              <div><img src={portraitAsset.url} alt="Dr. Nada Hassan" /></div>
+              <div><p className="section-kicker">Dr. Nada Hassan</p><h2>A consultation-led approach.</h2><p>For current qualifications, certifications, professional memberships, and clinical experience, please request the clinic's verified credentials during your consultation.</p></div>
+            </div>
+          </section>
+        )}
+      </main>
+      <footer className="footer"><div className="container footer-inner"><Logo compact /><div className="footer-links"><a href="/about">About</a><a href="/treatments">Treatments</a><a href="/faqs">FAQs</a><a href="/">Home</a></div><a className="footer-social" href={instagramUrl} target="_blank" rel="noreferrer"><Instagram size={18}/></a><p>© {new Date().getFullYear()} Dr. Nada's Clinic. All rights reserved.</p></div></footer>
+    </div>
+  );
+}
+
+function App({ page = null }) {
   const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
   const pageKey = currentPath === "/" ? "home" : currentPath.replace(/^\//, "").replace(/\/$/, "") || "home";
+  if (page && page !== "home") return <DedicatedPage type={page} />;
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [appointmentOpen, setAppointmentOpen] = React.useState(false);
   const [openFaq, setOpenFaq] = React.useState(0);
