@@ -8,6 +8,7 @@ import reviewUraiza from "./assets/review-uraiza.webp";
 
 const instagramUrl = "https://www.instagram.com/drnadahassan/?hl=en";
 const whatsappNumber = "923341111028";
+const ebookTitle = "How to Keep Your Skin Hydrated in Winter";
 
 const treatments = [
   { title: "PRP Therapy", category: "Skin rejuvenation", text: "Face PRP focused on skin revitalisation, collagen support, and a healthy-looking glow." },
@@ -47,7 +48,7 @@ function Logo({ compact = false }) {
 function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [appointmentOpen, setAppointmentOpen] = React.useState(false);
-  const [openFaq, setOpenFaq] = React.useState(0);
+  const [openFaq, setOpenFaq] = React.useState(0);\n  const [ebookOpen, setEbookOpen] = React.useState(false);\n  const [ebookSubmitted, setEbookSubmitted] = React.useState(false);\n  const [ebookForm, setEbookForm] = React.useState({ name: "", phone: "", email: "", concern: "", details: "" });
   const [form, setForm] = React.useState({ name: "", phone: "", email: "", service: "", comments: "" });
 
   const closeMenu = () => setMenuOpen(false);
@@ -57,6 +58,11 @@ function App() {
     setAppointmentOpen(true);
   };
   const updateField = (field, value) => setForm((current) => ({ ...current, [field]: value }));
+  const updateEbookField = (field, value) => setEbookForm((current) => ({ ...current, [field]: value }));
+  const submitEbook = (event) => {
+    event.preventDefault();
+    setEbookSubmitted(true);
+  };
   const submitAppointment = (event) => {
     event.preventDefault();
     const message = [
@@ -91,6 +97,7 @@ function App() {
         </div>
       </header>
 
+      <button className="ebook-fab" onClick={() => { setEbookSubmitted(false); setEbookOpen(true); }} aria-label="Get our winter skin hydration ebook"><span>FREE EBOOK</span><strong>Winter Skin Guide</strong></button>
       <main>
         <section className="hero">
           <div className="hero-glow hero-glow-one" />
@@ -253,6 +260,23 @@ function App() {
 
         <section className="location" id="contact"><div className="container location-grid"><div><p className="section-kicker">Contact & location</p><h2>Let's make your visit <em>simple.</em></h2><div className="contact-lines"><div><strong>WhatsApp</strong><span>+92 334 1111028</span></div><div><strong>Instagram</strong><span>@drnadahassan</span></div><div><strong>Appointments</strong><span>By consultation request</span></div></div></div><div className="map-card"><Clock3 size={19} /><strong>Clinic details</strong><p>Add the verified clinic address, opening hours, parking information, and Google Maps link here.</p><a href="#booking" onClick={openAppointment}>Request directions <ArrowRight size={15} /></a></div></div></section>
       </main>
+
+      {ebookOpen && <div className="ebook-overlay" role="presentation" onMouseDown={() => setEbookOpen(false)}><div className="ebook-modal" role="dialog" aria-modal="true" aria-labelledby="ebook-title" onMouseDown={(e) => e.stopPropagation()}>
+        <button className="ebook-close" onClick={() => setEbookOpen(false)} aria-label="Close"><X size={19} /></button>
+        {!ebookSubmitted ? <>
+          <div className="ebook-cover"><div className="ebook-cover-inner"><span>DR. NADA'S CLINIC</span><Sparkles size={23}/><strong>How to Keep<br/><em>Your Skin</em><br/>Hydrated in Winter</strong><small>A practical winter skin-care guide</small></div></div>
+          <div className="ebook-content"><p className="section-kicker">Complimentary guide</p><h2>Healthy-looking skin, even in <em>winter.</em></h2><p>We've written a practical ebook to help you understand winter dryness and build a simple hydration-focused routine.</p><p className="ebook-note">Fill in the form below and we'll send the ebook to your email.</p>
+            <form className="ebook-form" onSubmit={submitEbook}>
+              <label><span>Full Name <b>*</b></span><input required value={ebookForm.name} onChange={(e) => updateEbookField("name", e.target.value)} placeholder="Your full name"/></label>
+              <label><span>Phone Number <b>*</b></span><input required type="tel" value={ebookForm.phone} onChange={(e) => updateEbookField("phone", e.target.value)} placeholder="Your phone number"/></label>
+              <label className="ebook-full"><span>Email Address <b>*</b></span><input required type="email" value={ebookForm.email} onChange={(e) => updateEbookField("email", e.target.value)} placeholder="you@example.com"/></label>
+              <label className="ebook-full"><span>What is your main skin concern? <b>*</b></span><select required value={ebookForm.concern} onChange={(e) => updateEbookField("concern", e.target.value)}><option value="" disabled>Select your concern</option><option>Dry or dehydrated skin</option><option>Dull or tired-looking skin</option><option>Sensitive or irritated skin</option><option>Acne or breakouts</option><option>Fine lines or signs of ageing</option><option>Uneven skin tone or texture</option><option>Oily / combination skin</option><option>Hair or scalp concern</option><option>General skin-care guidance</option><option>Other</option></select></label>
+              <label className="ebook-full"><span>Tell us a little more <small>(optional)</small></span><textarea rows="3" value={ebookForm.details} onChange={(e) => updateEbookField("details", e.target.value)} placeholder="Anything you'd like the clinic to know about your skin..."/></label>
+              <button className="btn btn-primary ebook-submit" type="submit">Get the ebook by email <ArrowRight size={16}/></button>
+            </form>
+          </div>
+        </> : <div className="ebook-success"><div className="success-icon"><Check size={28}/></div><p className="section-kicker">Thank you</p><h2>Your ebook request is <em>received.</em></h2><p>Thank you, {ebookForm.name}. Please check <strong>{ebookForm.email}</strong> for your copy of <strong>{ebookTitle}</strong>.</p><p className="ebook-small">If you don't see it shortly, please check your spam or promotions folder.</p><button className="btn btn-primary" onClick={() => setEbookOpen(false)}>Continue exploring the clinic</button></div>}
+      </div></div>}
 
       {appointmentOpen && <div className="appointment-overlay" role="presentation" onMouseDown={() => setAppointmentOpen(false)}><div className="appointment-modal" role="dialog" aria-modal="true" aria-labelledby="appointment-title" onMouseDown={(e) => e.stopPropagation()}><button className="appointment-close" onClick={() => setAppointmentOpen(false)} aria-label="Close"><X size={20} /></button><div className="appointment-heading"><p className="section-kicker">Book a private consultation</p><h2 id="appointment-title">Let's make a plan <em>for you.</em></h2><p>Share your details and continue with the clinic on WhatsApp.</p></div><form className="appointment-form" onSubmit={submitAppointment}><label><span>Full Name <b>*</b></span><input required value={form.name} onChange={(e) => updateField("name", e.target.value)} placeholder="Your full name" /></label><label><span>Phone Number <b>*</b></span><input required type="tel" value={form.phone} onChange={(e) => updateField("phone", e.target.value)} placeholder="Your phone number" /></label><label><span>Email Address <b>*</b></span><input required type="email" value={form.email} onChange={(e) => updateField("email", e.target.value)} placeholder="you@example.com" /></label><label><span>Treatment <b>*</b></span><select required value={form.service} onChange={(e) => updateField("service", e.target.value)}><option value="" disabled>Select a treatment</option>{treatments.map((t) => <option key={t.title}>{t.title}</option>)}<option>General consultation</option></select></label><label className="appointment-full"><span>Notes <small>(optional)</small></span><textarea rows="4" value={form.comments} onChange={(e) => updateField("comments", e.target.value)} placeholder="Tell us about your main concern or goal..." /></label><button className="btn btn-primary appointment-submit" type="submit">Submit & continue to WhatsApp <ArrowRight size={17} /></button></form></div></div>}
 
