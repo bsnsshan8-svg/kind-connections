@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight, Check, Instagram, Menu, Sparkles, Star, X } from "lucide-react";
 import portraitAsset from "./assets/dr-nada-portrait.png.asset.json";
+import clinicLogo from "./assets/dr-nada-logo.png";
 
 const instagramUrl = "https://www.instagram.com/drnadahassan/?hl=en";
 
@@ -53,8 +54,7 @@ const services = [
 function Logo({ compact=false }) {
   return (
     <a className={compact ? "brand brand--compact" : "brand"} href="#top" aria-label="Dr. Nada's Clinic home">
-      <span className="brand-mark"><span></span><span></span><span></span></span>
-      <span><strong>Dr. Nada's</strong><small>CLINIC</small></span>
+      <img className="brand-logo" src={clinicLogo} alt="Dr. Nada's Clinic" />
     </a>
   );
 }
