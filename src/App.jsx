@@ -156,8 +156,8 @@ function DedicatedPage({ type }) {
         {type === "clinic" && (
           <section className="section dedicated-proof">
             <div className="container dedicated-proof-grid">
-              <div><img src={treatmentGallery} alt="Treatment services at Dr. Nada's Clinic" /></div>
-              <div><p className="section-kicker">Treatment environment</p><h2>A considered clinical experience.</h2><p>This gallery uses the approved treatment visuals supplied for the clinic website. Real clinic interior photography can be added when available.</p></div>
+<div><img src={clinicInteriorAsset.url} alt="Consultation inside Dr. Nada's Clinic" /></div>
+              <div><p className="section-kicker">Treatment environment</p><h2>A considered clinical experience.</h2><p>A calm, private setting for consultations, treatment planning, and care — designed around your comfort.</p></div>
             </div>
           </section>
         )}
@@ -286,7 +286,7 @@ function App({ page = null }) {
 
         <section className="section about-editorial" id="about">
           <div className="container editorial-grid">
-            <div className="editorial-image"><img src={problemSkin} alt="Patient considering her skin in a mirror" /></div>
+            <div className="editorial-image"><img src={skinConsultAsset.url} alt="Skin consultation at Dr. Nada's Clinic" /></div>
             <div className="editorial-copy">
               <p className="section-kicker">The clinic experience</p>
               <h2>Care that feels <em>considered.</em></h2>
@@ -318,7 +318,7 @@ function App({ page = null }) {
               <p className="section-intro">Explore the clinic's core services. Treatment suitability, duration, recovery, and aftercare can be discussed during your consultation.</p>
             </div>
             <div className="treatment-layout">
-              <div className="treatment-feature"><img src={treatmentGallery} alt="Dr. Nada's Clinic treatment gallery" /><div><span>Signature care</span><h3>Skin, hair & aesthetic treatments</h3><a href="#booking" onClick={openAppointment}>Discuss your goals <ArrowRight size={16} /></a></div></div>
+              <div className="treatment-feature"><img src={facialAsset.url} alt="Facial treatment at Dr. Nada's Clinic" /><div><span>Signature care</span><h3>Skin, hair & aesthetic treatments</h3><a href="#booking" onClick={openAppointment}>Discuss your goals <ArrowRight size={16} /></a></div></div>
               <div className="treatment-list">
                 {treatments.map((t, i) => <a className="treatment-row" href="#booking" onClick={openAppointment} key={t.title}><span className="treatment-number">0{i + 1}</span><div><small>{t.category}</small><h3>{t.title}</h3><p>{t.text}</p></div><ArrowRight className="row-arrow" size={17} /></a>)}
               </div>
@@ -349,7 +349,7 @@ function App({ page = null }) {
 
         <section className="section technology">
           <div className="container tech-grid">
-            <div className="tech-visual"><img src={treatmentGallery} alt="Treatment and skin-care services at the clinic" /></div>
+            <div className="tech-visual"><img src={laserAsset.url} alt="Laser treatment at Dr. Nada's Clinic" /></div>
             <div className="tech-copy"><p className="section-kicker">Technology & innovation</p><h2>Advanced technology.<br /><em>Thoughtful care.</em></h2><p>The clinic offers modern treatment options across skin, hair, aesthetics, and laser care. The right approach depends on the individual and is discussed during consultation.</p><div className="tech-points"><div><Check size={15} /><span>Technology selected for the treatment goal</span></div><div><Check size={15} /><span>Clear explanation before treatment</span></div><div><Check size={15} /><span>Individual suitability and aftercare discussion</span></div></div></div>
           </div>
         </section>
